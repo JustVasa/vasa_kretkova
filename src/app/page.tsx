@@ -1,103 +1,111 @@
+import Navbar from "./components/Navbar";
 import Image from "next/image";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <>
+      {/* Navigace */}
+      <Navbar />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* HERO */}
+      <section
+        className="relative flex items-center justify-center h-[70vh] min-h-[480px]
+                   bg-gradient-to-b from-rose-100 via-pink-50 to-white text-center"
+      >
+        <div className="px-6">
+          <h1 className="ff-serif text-5xl md:text-6xl text-rose-600 font-semibold mb-4">
+            Kretková Natálie
+          </h1>
+          <div className="mx-auto h-[2px] w-24 bg-rose-400 mb-6" />
+          <p className="text-neutral-700 text-lg md:text-xl max-w-xl mx-auto leading-relaxed">
+            Permanent Makeup Artist — přirozená krása, precizní technika, moderní styl.
+          </p>
         </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-rose-50/30 via-transparent to-white/60 pointer-events-none" />
+      </section>
+
+      {/* ÚVODNÍ SEKCION */}
+      <main className="min-h-screen bg-gradient-to-b from-white to-rose-50">
+        {/* 1. blok – text vlevo, fotka vpravo */}
+        <section className="container mx-auto px-4 py-20 max-w-6xl grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 className="ff-serif text-2xl font-semibold text-rose-600 text-neutral-800 mb-6">
+              Kdo jsem a co to znamená?
+            </h2>
+            <p className="leading-7 text-neutral-700 mb-4">
+              Jmenuji se <strong>Natálie Kretková</strong> a dělat kosmetičku se zaměřením na
+              estetiku byl vždy můj sen! Ten sen jsem si už velmi brzo splnila a dnes mám za sebou
+              už přes <strong>dvě sta spokojených zákaznic :-)</strong>
+            </p>
+            <p className="leading-7 text-neutral-700 mb-4">
+              Moje práce je mým největším koníčkem a pracuji samozřejmě jen s nejlepšími a
+              nejkvalitnějšími značkami. Vykouzlím vám úsměv na tváři jak při barvení obočí,
+              laminaci, lashliftu či permanentním make-upu. Mé klientky jsou taky mými
+              “kamarádkami”.
+            </p>
+            <p className="leading-7 text-neutral-700">
+              Děkuji za vaši přízeň a budu se na Vás dále těšit. ❤️
+            </p>
+          </div>
+
+          <div className="flex justify-center">
+            <div className="relative w-full max-w-sm aspect-[4/5] rounded-2xl overflow-hidden shadow-lg">
+              <Image
+                src="/images/foto01.png"
+                alt="Natálie Kretková při práci"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* 2. blok – fotka vlevo, text vpravo */}
+        <section className="container mx-auto px-4 py-16 max-w-6xl grid md:grid-cols-2 gap-12 items-center">
+          <div className="flex justify-center order-2 md:order-1">
+            <div className="relative w-full max-w-sm aspect-[4/5] rounded-2xl overflow-hidden shadow-lg">
+              <Image
+                src="/images/foto02.png"
+                alt="Permanentní make-up — ukázka práce"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+
+          <div className="order-1 md:order-2">
+            <h2 className="ff-serif text-2xl font-semibold text-rose-600 text-neutral-800 mb-6">
+              Co je permanentní make-up?
+            </h2>
+            <p className="leading-7 text-neutral-700 mb-4">
+              Permanentní make-up je kosmetický zákrok, při kterém se pomocí jemné jehly vstřikuje
+              barvivo do kůže. Tento zákrok se používá k vyplnění obočí, linkování očí a zvýraznění
+              rtů. Barva se vybírá tak, aby co nejlépe odpovídala přirozenému tónu pleti.
+            </p>
+            <p className="leading-7 text-neutral-700 mb-4">
+              Je vhodný pro lidi s řídkým obočím nebo s těžko kreslitelným obočím. Také pro ty,
+              kteří chtějí ušetřit čas při nanášení make-upu. Výsledek vydrží obvykle
+              <strong> 3 – 4 roky</strong> podle typu pleti a péče.
+            </p>
+            <p className="leading-7 text-neutral-700 mb-4">
+              Při zákroku se používá lokální anestetikum, aby se snížila bolestivost. Po zákroku může
+              být kůže podrážděná a oteklá – je důležité chránit místo před sluncem a udržovat ho
+              čisté, aby barva nevybledla.
+            </p>
+            <p className="leading-7 text-neutral-700">
+              Permanentní make-up je stále populárnější a mnoho žen si ho oblíbilo. Je to rychlý a
+              efektivní způsob, jak zvýraznit svou krásu a ušetřit čas.
+            </p>
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      {/* FOOTER */}
+      <footer className="border-t border-neutral-200 mt-20 bg-white/60 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-10 text-sm text-neutral-500 text-center">
+          © {new Date().getFullYear()} Kretková Natálie — Permanent Makeup Studio
+        </div>
       </footer>
-    </div>
+    </>
   );
 }

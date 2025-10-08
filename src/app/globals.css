@@ -1,26 +1,84 @@
+/* Tailwind */
 @import "tailwindcss";
 
+/* ---------- ZÁKLAD ---------- */
+
+/* Volitelný brand akcent (můžeš použít ve vlastních stylech) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --brand: #e66a8b;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Plynulý scroll pro anchor odkazy (např. šipka dolů) */
+html {
+  scroll-behavior: smooth;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Lepší vykreslování obrázků a fontů */
+img, svg, video, canvas {
+  image-rendering: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Výběr textu v jemném odstínu */
+::selection {
+  background: rgba(230, 106, 139, 0.18); /* var(--brand) s průhledností */
+  color: #111827; /* neutral-900 */
+}
+
+/* ---------- FONTY ---------- */
+
+.ff-sans {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+}
+
+.ff-serif {
+  font-family: var(--font-playfair), ui-serif, Georgia, Cambria, "Times New Roman",
+    Times, serif;
+}
+
+/* ---------- LAYOUT ---------- */
+
+/* Sjednocená max šířka .container (používáš spolu s Tailwind .container, mx-auto, px-4) */
+.container {
+  max-width: 1200px;
+}
+
+/* ---------- ANIMACE ---------- */
+
+/* Jemná „bounce“ animace pro šipku dolů */
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Třída pro šipku / cokoliv co má lehce pulzovat */
+.animate-bounce-slow {
+  animation: bounce-slow 2s infinite;
+}
+
+/* Respektuj preferenci uživatele (zredukuj animace) */
+@media (prefers-reduced-motion: reduce) {
+  .animate-bounce-slow {
+    animation: none !important;
+  }
+}
+
+/* ---------- FOCUS STAVY (lepší přístupnost) ---------- */
+
+:where(a, button, input, textarea, select, summary):focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(230, 106, 139, 0.35); /* růžový focus ring */
+  border-radius: 0.5rem;
+}
+
+/* ---------- MISC ---------- */
+
+/* Zabraň „blesku“ tap highlightu na iOS PWA/Chrome */
+* {
+  -webkit-tap-highlight-color: transparent;
 }
