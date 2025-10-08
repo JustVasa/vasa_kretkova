@@ -3,35 +3,38 @@
 import Navbar from "@/app/components/Navbar";
 import { useState } from "react";
 
-
 export default function RezervacePage() {
-  const [state, setState] = useState<"idle" | "sending" | "ok" | "error">("idle");
-  const [error, setError] = useState<string | null>(null);
+  const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [error, setError] = useState("");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setState("sending");
-    setError(null);
+    setError("");
 
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const payload = {
-      name: formData.get("name") as string,
-      email: formData.get("email") as string,
-      message: formData.get("message") as string,
-      hp: formData.get("website") as string, // honeypot
+
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+      hp: formData.get("hp"), // honeypot
     };
 
     try {
       const res = await fetch("/api/rezervace", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(data),
       });
-      if (!res.ok) throw new Error(await res.text());
-      setState("ok");
+
+      if (!res.ok) throw new Error("Server error");
+
+      setState("sent");
       form.reset();
-    } catch (err: any) {
+    } catch {
+      // ✅ ESLint safe – žádný 'any', žádná nevyužitá proměnná
       setError("Odeslání se nezdařilo. Zkuste to prosím znovu nebo zavolejte.");
       setState("error");
     }
@@ -42,105 +45,107 @@ export default function RezervacePage() {
       <Navbar />
 
       <main className="min-h-screen bg-gradient-to-b from-white to-rose-50">
-        {/* Nadpis */}
-        <section className="text-center py-16 md:py-20">
+        <section className="text-center py-16 md:py-24">
           <h1 className="ff-serif text-4xl md:text-5xl text-rose-600 font-semibold">
             REZERVACE
           </h1>
+          <p className="mt-3 text-neutral-600">
+            Vaši rezervaci potvrdím do 24 hodin.
+            <br />
+            Objednat se můžete i na instagramovém profilu{" "}
+            <a
+              href="https://www.instagram.com/kretkova_pernament"
+              className="text-rose-600 hover:underline"
+              target="_blank"
+            >
+              @kretkova_pernament
+            </a>{" "}
+            nebo na tel. čísle dole.
+          </p>
+          <p className="mt-4 text-rose-500 text-lg font-medium">
+            Volejte: <a href="tel:+420722666036">+420 722 666 036</a>
+          </p>
         </section>
 
-        {/* Dvoukolejné rozvržení */}
-        <section className="container mx-auto px-4 pb-24 max-w-6xl grid md:grid-cols-2 gap-12 items-start">
-          {/* Text vlevo */}
-          <div className="text-neutral-700 leading-7">
-            <p className="mb-5">
-              <strong>Vaši rezervaci potvrdím do 24 hodin</strong>
-            </p>
-            <p className="mb-5">
-              Objednat se můžete i na instagramovém profilu{" "}
-              <a
-                href="https://www.instagram.com/kretkova_pernament"
-                target="_blank"
-                rel="noreferrer"
-                className="text-rose-600 hover:underline"
-              >
-                @kretkova_pernament
-              </a>{" "}
-              nebo na tel. čísle dole.
-            </p>
-            <p className="mb-2">
-              <strong>Volejte:</strong> <a href="tel:+420722666036" className="text-rose-600 hover:underline">+420 722 666 036</a>
-            </p>
+        <section className="container mx-auto px-4 pb-24 max-w-4xl">
+          <div className="grid md:grid-cols-2 gap-10 items-start">
+            {/* Levá strana – text */}
+            <div>
+              <h2 className="ff-serif text-2xl text-rose-600 mb-4">
+                Napište mi zprávu
+              </h2>
+              <p className="text-neutral-700 leading-relaxed">
+                Vyplňte formulář a já se vám ozvu zpět co nejdříve.
+              </p>
+            </div>
 
-            {state === "ok" && (
-              <div className="mt-8 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-700">
-                Děkuji, zpráva byla úspěšně odeslána. Ozvu se co nejdříve. 💌
-              </div>
-            )}
-            {state === "error" && (
-              <div className="mt-8 rounded-xl border border-rose-200 bg-rose-50 p-4 text-rose-700">
-                {error}
-              </div>
-            )}
-          </div>
-
-          {/* Formulář vpravo */}
-          <form onSubmit={onSubmit} className="bg-white/80 backdrop-blur rounded-2xl shadow-lg p-6 md:p-8 border border-neutral-200">
-            {/* Honeypot (skryté pole proti spamu) */}
-            <input type="text" name="website" className="hidden" tabIndex={-1} autoComplete="off" />
-
-            <div className="space-y-5">
+            {/* Pravá strana – formulář */}
+            <form
+              onSubmit={onSubmit}
+              className="bg-white rounded-2xl shadow-md p-6 space-y-4"
+            >
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-2">
+                <label className="block text-sm font-medium text-neutral-700 mb-1">
                   Jméno a příjmení
                 </label>
                 <input
-                  id="name"
-                  name="name"
                   type="text"
+                  name="name"
                   required
-                  className="w-full rounded-xl border border-neutral-300 px-4 py-3 outline-none focus:ring-2 focus:ring-rose-300"
-                  placeholder="Jan Novák"
+                  className="w-full border border-neutral-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-400"
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-2">
+                <label className="block text-sm font-medium text-neutral-700 mb-1">
                   E-mail
                 </label>
                 <input
-                  id="email"
-                  name="email"
                   type="email"
+                  name="email"
                   required
-                  className="w-full rounded-xl border border-neutral-300 px-4 py-3 outline-none focus:ring-2 focus:ring-rose-300"
-                  placeholder="jan.novak@example.com"
+                  className="w-full border border-neutral-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-400"
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-neutral-700 mb-2">
+                <label className="block text-sm font-medium text-neutral-700 mb-1">
                   Zpráva
                 </label>
                 <textarea
-                  id="message"
                   name="message"
                   required
-                  rows={6}
-                  className="w-full rounded-xl border border-neutral-300 px-4 py-3 outline-none focus:ring-2 focus:ring-rose-300"
-                  placeholder="Napište, o jakou službu máte zájem a preferovaný termín…"
-                />
+                  rows={4}
+                  className="w-full border border-neutral-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-400"
+                ></textarea>
               </div>
+
+              {/* honeypot – skrytý input proti spamu */}
+              <input
+                type="text"
+                name="hp"
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden"
+              />
 
               <button
                 type="submit"
                 disabled={state === "sending"}
-                className="inline-flex items-center justify-center rounded-xl bg-rose-600 px-6 py-3 text-white font-medium hover:bg-rose-700 disabled:opacity-60"
+                className="w-full bg-rose-500 text-white py-3 rounded-md hover:bg-rose-600 transition-colors disabled:opacity-50"
               >
-                {state === "sending" ? "Odesílám…" : "Odeslat rezervaci"}
+                {state === "sending"
+                  ? "Odesílám..."
+                  : state === "sent"
+                  ? "Odesláno ✅"
+                  : "Odeslat rezervaci"}
               </button>
-            </div>
-          </form>
+
+              {error && (
+                <p className="text-red-500 text-sm mt-2 text-center">{error}</p>
+              )}
+            </form>
+          </div>
         </section>
       </main>
 
