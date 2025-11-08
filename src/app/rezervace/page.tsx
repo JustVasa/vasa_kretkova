@@ -62,7 +62,7 @@ export default function RezervacePage() {
             <br />
             Objednat se můžete i na instagramovém profilu{" "}
             <a
-              href="https://www.instagram.com/kretkova_pernament"
+              href="https://www.instagram.com/kretkova_permanent/"
               className="text-rose-600 hover:underline"
               target="_blank"
               rel="noreferrer"
